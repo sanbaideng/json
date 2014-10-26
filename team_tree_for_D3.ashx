@@ -41,7 +41,7 @@ public class team_tree : IHttpHandler {
         int count = dt.Rows.Count;
         if (count==0)
         {
-            ss =  "{name:\"" + id + "\"}";
+            ss =  "name:\"" + id + "\"";
         }
         else
 	{
@@ -51,15 +51,15 @@ public class team_tree : IHttpHandler {
                 s[i] = combination(dt.Rows[j]["team_id"].ToString());
                 //s = "name:\"" + dt.Rows[0]["team_id"].ToString() + "\",contents:[" + combination(dt.Rows[0]["team_id"].ToString()) + "]"; 
             }
-	}
-	string arr = "";
-        for (int i = 0; i < dt.Rows.Count; i++)
-        {
-          arr =arr+ s[i]+",";
-        }
-        arr = arr.sunString[0,arr.Length-1];
-        
-        ss = "name:"+id+",contents:["+arr+"]";
+            
+            string arr = "";
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+              arr =arr+ s[i]+",";
+            }
+            arr = arr.sunString[0,arr.Length-1];
+    	}
+        ss = "name:"+id+",contents:["+arr+"]";//得到name:"abc" 的组合 最好arr可以为空（当没有子集时）
         return   ss  ;
     }
 }
