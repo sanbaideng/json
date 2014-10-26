@@ -9,14 +9,15 @@ public class team_tree : IHttpHandler {
     yyang.OraDbHelper data = new yyang.OraDbHelper(connstr);
     public void ProcessRequest (HttpContext context) {
         context.Response.ContentType = "text/plain";
-        string s = "";
+        string s[] ;
         string sql_team_0 = "select * from app_team t where t.parent_team_id is null order by t.team_id";
         System.Data.DataTable dt = data.ExecuteDataTable(sql_team_0);
         for (int i = 0; i < dt.Rows.Count; i++)
         {
-            s = s+combination(dt.Rows[i]["team_id"].ToString()); 
+          s[i] = combination(dt.Rows[i]["team_id"].ToString()); 
+          //s = s+combination(dt.Rows[i]["team_id"].ToString()); 
         }
-                
+        
         context.Response.Write(s);
     }
  
@@ -33,22 +34,14 @@ public class team_tree : IHttpHandler {
         int count = dt.Rows.Count;
         if (count==0)
         {
-            if (s!="")
-            {
-                s = s + "," + "{\"name\":\"" + id + "\"}";
-            }
-            else
-            {
-                s = s + "{\"name\":\"" + id + "\"}";
-            }
-            
+            s =  "{name:\"" + id + "\"}";
         }
         else
 	    {
             //string sql_child = "select * from app_team t where t.parent_team_id='"++"'";
             for (int j = 0; j < dt.Rows.Count; j++)
             {
-                s = s + "\"name\":\"" + dt.Rows[0]["team_id"].ToString() + "\",\"contents\":[" + combination(dt.Rows[0]["team_id"].ToString()) + "]"; 
+                s = "name:\"" + dt.Rows[0]["team_id"].ToString() + "\",contents:[" + combination(dt.Rows[0]["team_id"].ToString()) + "]"; 
             }                     
 	    } 
         return "{" + s + "}";
