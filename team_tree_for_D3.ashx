@@ -14,10 +14,16 @@ public class team_tree : IHttpHandler {
         System.Data.DataTable dt = data.ExecuteDataTable(sql_team_0);
         for (int i = 0; i < dt.Rows.Count; i++)
         {
-          s[i] = combination(dt.Rows[i]["team_id"].ToString()); 
-          //s = s+combination(dt.Rows[i]["team_id"].ToString()); 
+          s[i] = combination(dt.Rows[i]["team_id"].ToString());
         }
+        string arr = "";
+        for (int i = 0; i < dt.Rows.Count; i++)
+        {
+          arr =arr+ a[i]+",";
+        }
+        arr = arr.sunString[0,arr.Length-1];
         
+        s = "name:\"root\",contents:["+arr+"]";
         context.Response.Write(s);
     }
  
@@ -44,6 +50,6 @@ public class team_tree : IHttpHandler {
                 s = "name:\"" + dt.Rows[0]["team_id"].ToString() + "\",contents:[" + combination(dt.Rows[0]["team_id"].ToString()) + "]"; 
             }                     
 	    } 
-        return "{" + s + "}";
+        return   s  ;
     }
 }
